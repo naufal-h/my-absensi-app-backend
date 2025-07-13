@@ -1,7 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import authRoutes from "./routes/auth.routes";
+import authRoutes from "./routes/karyawan.routes";
 
 import cookieParser from "cookie-parser";
 
@@ -23,5 +23,5 @@ app.use("/api", authRoutes);
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
-  console.log(`✅ Auth service running at http://localhost:${PORT}`);
+  console.log(`✅ Karyawan service running at http://localhost:${PORT}`);
 });
