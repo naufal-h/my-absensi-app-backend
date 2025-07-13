@@ -1,9 +1,10 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import path from "path";
 
 import cookieParser from "cookie-parser";
-import karyawanRoutes from "./routes/karyawan.routes";
+import absensiRoutes from "./routes/absensi.routes";
 
 dotenv.config();
 
@@ -18,9 +19,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api", karyawanRoutes);
+app.use("/api", absensiRoutes);
 
 const PORT = process.env.PORT || 3001;
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.listen(PORT, () => {
   console.log(`✅ Karyawan service running at http://localhost:${PORT}`);
