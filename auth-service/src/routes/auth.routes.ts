@@ -10,8 +10,11 @@ const JWT_SECRET = process.env.JWT_SECRET || "rahasia";
 
 interface User extends RowDataPacket {
   id: number;
+  name: string;
   email: string;
   password: string;
+  division?: string;
+  position?: string;
   role: "admin" | "employee";
 }
 
@@ -23,7 +26,10 @@ router.post("/login", async (req, res) => {
 
   try {
     const [rows] = await pool.query<User[]>(
-      "SELECT * FROM users WHERE email = ?",
+      `SELECT u.*, k.name, k.division, k.position
+       FROM users u 
+       LEFT JOIN karyawan k ON u.id = k.user_id 
+       WHERE u.email = ?`,
       [email]
     );
 
@@ -34,7 +40,14 @@ router.post("/login", async (req, res) => {
     if (!match) return res.status(401).json({ error: "Password salah" });
 
     const token = jwt.sign(
-      { id: user.id, email: user.email, name: user.name, role: user.role },
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        division: user.division,
+        position: user.position,
+      },
       JWT_SECRET,
       {
         expiresIn: "7d",
