@@ -26,5 +26,5 @@ const PORT = process.env.PORT || 3001;
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.listen(PORT, () => {
-  console.log(`✅ Karyawan service running at http://localhost:${PORT}`);
+  console.log(`✅ Absensi service running at http://localhost:${PORT}`);
 });
