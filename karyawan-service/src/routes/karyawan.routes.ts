@@ -1,9 +1,10 @@
 import { Router } from "express";
 import pool from "../db/pool";
+import { verifyToken } from "../middleware/verifyToken";
 
 const router = Router();
 
-router.get("/karyawan", async (req, res) => {
+router.get("/karyawan", verifyToken, async (req, res) => {
   try {
     const [rows] = await pool.query(`
       SELECT
@@ -21,7 +22,7 @@ router.get("/karyawan", async (req, res) => {
   }
 });
 
-router.post("/karyawan", async (req, res) => {
+router.post("/karyawan", verifyToken, async (req, res) => {
   const { email, name, division, position } = req.body;
 
   if (!email || !name) {
@@ -61,7 +62,7 @@ router.post("/karyawan", async (req, res) => {
   }
 });
 
-router.put("/karyawan", async (req, res) => {
+router.put("/karyawan", verifyToken, async (req, res) => {
   const { email, name, division, position } = req.body;
 
   if (!email || !name) {
@@ -100,7 +101,7 @@ router.put("/karyawan", async (req, res) => {
   }
 });
 
-router.delete("/karyawan/:user_id", async (req, res) => {
+router.delete("/karyawan/:user_id", verifyToken, async (req, res) => {
   const { user_id } = req.params;
 
   try {

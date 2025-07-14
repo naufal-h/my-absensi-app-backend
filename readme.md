@@ -2,14 +2,6 @@
 
 **Fast, unopinionated, minimalist web framework for [Node.js](https://nodejs.org).**
 
-**This project has a [Code of Conduct][].**
-
-[![NPM Version][npm-version-image]][npm-url]
-[![NPM Downloads][npm-downloads-image]][npm-downloads-url]
-[![Linux Build][github-actions-ci-image]][github-actions-ci-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
-[![OpenSSF Scorecard Badge][ossf-scorecard-badge]][ossf-scorecard-visualizer]
-
 ```js
 import express from "express";
 

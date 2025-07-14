@@ -1,10 +1,11 @@
 import { Router } from "express";
 import pool from "../db/pool";
 import { upload } from "../middleware/upload";
+import { verifyToken } from "../middleware/verifyToken";
 
 export const router = Router();
 
-router.post("/absensi", async (req, res) => {
+router.post("/absensi", verifyToken, async (req, res) => {
   const { user_id, timestamp, photo } = req.body;
 
   if (!user_id || !timestamp) {
@@ -32,7 +33,7 @@ router.post("/absensi", async (req, res) => {
   }
 });
 
-router.get("/absensi/me", async (req, res) => {
+router.get("/absensi/me", verifyToken, async (req, res) => {
   const { user_id } = req.query;
 
   if (!user_id) {
@@ -58,7 +59,7 @@ router.get("/absensi/me", async (req, res) => {
   }
 });
 
-router.get("/absensi/all", async (_req, res) => {
+router.get("/absensi/all", verifyToken, async (_req, res) => {
   try {
     const [rows] = await pool.query(
       `SELECT k.name, u.email, a.timestamp, a.photo
@@ -75,7 +76,7 @@ router.get("/absensi/all", async (_req, res) => {
   }
 });
 
-router.get("/absensi/me-today", async (req, res) => {
+router.get("/absensi/me-today", verifyToken, async (req, res) => {
   const { user_id } = req.query;
   if (!user_id) {
     return res.status(400).json({ error: "user_id wajib diisi" });
